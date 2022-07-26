@@ -1,0 +1,49 @@
+﻿@model PizzeCategorie
+<!-- Questa é la view che serve per aggiungere le pizze, inoltre sono inserite anche i validation che servono a dare delle regole --> 
+<!-- Con questa regola l'utente puó corregere il model che sta creanda, cosi da inviarlo corretamente -->
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex align-items-center">
+                <h1 class="mt-3 mb-3">Nuova pizza</h1>
+            </div>
+            <form action="@Url.Action("Create","Pizze")" method="post">
+                @Html.AntiForgeryToken()
+                <div class="mb-3">
+                    <strong>Immagine:</strong>
+                    <input asp-for="Pizze.Immagine" class="d-block w-100" />
+                    <span asp-validation-for="Pizze.Immagine" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <strong>Nome Pizza:</strong>
+                    <input asp-for="Pizze.Nome" class="d-block w-100" />
+                    <span asp-validation-for="Pizze.Nome" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <strong>Descrizione:</strong>
+                    <textarea asp-for="Pizze.Descrizione" rows="10" class="d-block w-100"></textarea>
+                    <span asp-validation-for="Pizze.Descrizione" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <strong>Prezzo:</strong>
+                    <input asp-for="Pizze.Prezzo" class="d-block w-100" />
+                    <span asp-validation-for="Pizze.Prezzo" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <strong>Categoria:</strong>
+                    <select asp-for="Pizze.CategoryId" class="form-select" aria-label="Default select example">
+                       <option selected>Seleziona una categoria</option>
+                        @foreach(Category category in Model.Categorie)
+                        {
+                            <option value="@category.Id">@category.NomeCategoria</option>
+                        }
+                    </select>
+                </div>
+                <div class="text-end">
+                    <input type="submit" class="btn btn-small btn-success" value="Salva">
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
