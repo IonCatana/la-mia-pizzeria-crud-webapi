@@ -8,17 +8,22 @@ namespace la_mia_pizzeria_model.Controllers
     public class PizzeController : Controller
     {
         [HttpGet]
-        public IActionResult Index()
-        {   // Aggiungo il nuovo sistema che abbiamo imparato con i DB            
+        public IActionResult Index(string SearchString)
+        {
             List<Pizze> pizze = new List<Pizze>();
 
             using (PizzeContext db = new PizzeContext())
             {
-                pizze = db.Pizze.ToList<Pizze>();
+                if (SearchString != null)
+                {
+                    pizze = db.Pizze.Where(pizze => pizze.Nome.Contains(SearchString) || pizze.Descrizione.Contains(SearchString)).ToList<Pizze>();
+                }
+                else
+                {
+                    pizze = db.Pizze.ToList<Pizze>();
+                }
             }
-            //Il controller dice le liste e il modello
-            //Il controller si chiama la lista delle pizze con il metodo GetPizze()
-            //Poi passo un razor, quindi insertisco
+
             return View("HomePage", pizze);
         }
         //Creo una nuova pagina, quindi per prima cosa creo un metodo nuovo
